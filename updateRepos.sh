@@ -65,23 +65,15 @@ printFailedRepos(){
 }
 
 update(){
-  clear
   dir=$1;
   cd $dir ;
   if [ -d .git ]; then
     cecho b "# UPDATING => $dir ";
     cecho c "$(git fetch)";
-    git rev-parse --verify develop
+    git rev-parse --verify 12.0
     if [ "$?" == "0" ]; then
-      cecho c "$(git checkout 'develop')";
-      cecho c "# Branch develop will be updated"
-    else
-      git rev-parse --verify develop
-      # git rev-parse --verify master
-      if [ "$?" == "0" ]; then
-        cecho c "$(git checkout 'master')";
-        cecho c "# Branch master will be updated"
-      fi
+      cecho c "$(git checkout '12.0')";
+      cecho c "# Branch 12.0 will be updated"
     fi
     output=$(git pull)
     status=$?
@@ -96,7 +88,6 @@ update(){
 }
 
 finish(){
-  clear
   cecho g "########################################";
   cecho g "# DONE! ";
   printUpdatedRepos ${updatedRepos}
